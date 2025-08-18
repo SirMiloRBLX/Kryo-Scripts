@@ -378,7 +378,7 @@ function UILibrary:Window(title)
         end
 
         label.InputBegan:Connect(function(input)
-            if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
                 dragging = true
                 update(input)
                 Services.TweenService:Create(fill, TweenInfo.new(0.15), { BackgroundColor3 = Color3.fromRGB(255, 255, 255) }):Play()
@@ -386,7 +386,7 @@ function UILibrary:Window(title)
         end)
 
         label.InputEnded:Connect(function(input)
-            if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
                 dragging = false
                 Services.TweenService:Create(fill, TweenInfo.new(0.15), { BackgroundColor3 = Color3.fromRGB(131, 133, 255) }):Play()
             end
