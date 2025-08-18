@@ -1,11 +1,8 @@
---// Roblox UI Library (De-Minified & Readable) //-- 
-
 local UILibrary = {
     windowCount = 0,
     flags = {}
 }
 
--- Service shortcut table
 local Services = {}
 setmetatable(Services, {
     __index = function(_, serviceName)
@@ -14,11 +11,9 @@ setmetatable(Services, {
     __newindex = function() return end
 })
 
--- Variables
 local currentDraggingObject
 local mouse = Services.Players.LocalPlayer:GetMouse()
 
--- Dragging Function
 function Drag(frame, dragHandle)
     if currentDraggingObject then
         currentDraggingObject.ZIndex = -2
@@ -39,7 +34,7 @@ function Drag(frame, dragHandle)
     end
 
     dragHandle.InputBegan:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
             dragging = true
             startPos = input.Position
             startFramePos = frame.Position
@@ -53,7 +48,7 @@ function Drag(frame, dragHandle)
     end)
 
     frame.InputChanged:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseMovement then
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
             dragInput = input
         end
     end)
@@ -65,7 +60,6 @@ function Drag(frame, dragHandle)
     end)
 end
 
--- Ripple Click Effect
 function ClickEffect(parent)
     task.spawn(function()
         if parent.ClipsDescendants ~= true then
@@ -100,23 +94,18 @@ function ClickEffect(parent)
     end)
 end
 
--- Main ScreenGui
 local mainGui = Instance.new("ScreenGui")
 mainGui.Name = Services.HttpService:GenerateGUID()
 mainGui.Parent = Services.RunService:IsStudio() and Services.Players.LocalPlayer:WaitForChild("PlayerGui") or Services.CoreGui
 
--- Toggle GUI with LeftShift
 Services.UserInputService.InputBegan:Connect(function(input, processed)
     if input.KeyCode == Enum.KeyCode.LeftShift and not processed then
         mainGui.Enabled = not mainGui.Enabled
     end
 end)
 
--- Window Creation
 function UILibrary:Window(title)
     self.windowCount += 1
-
-    -- Main window frame (header)
     local windowTop = Instance.new("Frame")
     windowTop.Name = "Top"
     windowTop.Parent = mainGui
@@ -125,8 +114,7 @@ function UILibrary:Window(title)
     windowTop.Size = UDim2.new(0, 212, 0, 36)
     windowTop.Position = UDim2.new(0, 25, 0, -30 + 36 * self.windowCount + 6 * self.windowCount)
     Drag(windowTop)
-
-    -- Window line (with gradient)
+    
     local windowLine = Instance.new("Frame")
     windowLine.Name = "WindowLine"
     windowLine.Parent = windowTop
@@ -146,7 +134,6 @@ function UILibrary:Window(title)
         ColorSequenceKeypoint.new(1.00, Color3.fromRGB(43, 43, 43))
     })
 
-    -- Header text
     local header = Instance.new("TextLabel")
     header.Name = "Header"
     header.Parent = windowTop
@@ -158,7 +145,6 @@ function UILibrary:Window(title)
     header.TextSize = 14
     header.TextXAlignment = Enum.TextXAlignment.Left
 
-    -- Expand/Collapse Button
     local toggleButton = Instance.new("TextButton")
     toggleButton.Name = "WindowToggle"
     toggleButton.Parent = windowTop
@@ -177,8 +163,7 @@ function UILibrary:Window(title)
     toggleImage.ImageRectOffset = Vector2.new(524, 764)
     toggleImage.ImageRectSize = Vector2.new(36, 36)
     toggleImage.Rotation = 180
-
-    -- Bottom container for elements
+    
     local bottom = Instance.new("Frame")
     bottom.Name = "Bottom"
     bottom.Parent = windowTop
@@ -193,7 +178,6 @@ function UILibrary:Window(title)
     layout.SortOrder = Enum.SortOrder.LayoutOrder
     layout.Padding = UDim.new(0, 4)
 
-    -- Window expand / collapse logic
     local expanded = false
     local animating = false
 
@@ -225,10 +209,8 @@ function UILibrary:Window(title)
         end
     end)
 
-    -- Elements API
     local Elements = {}
 
-    -- Label
     function Elements:Label(text)
         local lbl = Instance.new("TextButton")
         lbl.Name = "Label"
@@ -243,11 +225,9 @@ function UILibrary:Window(title)
         lbl.AutoButtonColor = false
         return lbl
     end
-
-    -- Button
+    
     function Elements:Button(text, callback)
         callback = callback or function() end
-
         local container = Instance.new("Frame")
         container.Name = "ButtonObj"
         container.Parent = bottom
@@ -278,7 +258,6 @@ function UILibrary:Window(title)
         end)
     end
 
-    -- Toggle
     function Elements:Toggle(name, flagName, default, callback, flagsTable)
         flagsTable = flagsTable or UILibrary.flags
         flagName = flagName or Services.HttpService:GenerateGUID()
@@ -327,7 +306,6 @@ function UILibrary:Window(title)
         end)
     end
 
-    -- Slider
     function Elements:Slider(name, flagName, min, max, callback, default, flagsTable)
         min, max = min or 0, max or 100
         flagsTable = flagsTable or UILibrary.flags
