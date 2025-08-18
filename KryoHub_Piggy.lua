@@ -1,6 +1,6 @@
 --[[
  IF THERE ARE ANY BUGS OR GLITCHES PLEASE JOIN THE DISCORD SERVER AND REPORT IT!
- https://discord.gg/xPXPPgXgNK
+ https://discord.gg/QBzD4z7ES9
  --]]
  warn("Kryo Hub Has Loaded, If This Dosent Load Please Join The Discord Server And Report It")
  
