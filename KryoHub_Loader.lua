@@ -3,8 +3,8 @@ if _G.Debug then
 end
 
 local Supported = {
-    [4623386862] = "https://raw.githubusercontent.com/SirMiloRBLX/Kryo-Scripts/refs/heads/main/KryoHub_Piggy.lua", -- Piggy
-    [5661005779] = "https://raw.githubusercontent.com/SirMiloRBLX/Kryo-Scripts/refs/heads/main/KryoHub_Piggy.lua"  -- Piggy: Book 2
+    [4623386862] = "https://raw.githubusercontent.com/SirMiloRBLX/Kryo-Scripts/refs/heads/main/KyroHub_Piggy.lua", -- Piggy
+    [5661005779] = "https://raw.githubusercontent.com/SirMiloRBLX/Kryo-Scripts/refs/heads/main/KyroHub_Piggy.lua"  -- Piggy: Book 2
 }
 
 pcall(function()
